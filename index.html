@@ -1,0 +1,70 @@
+<html lang="es"><head>
+<link rel="shortcut icon" href="https://stereoretroapp.pages.dev/img/logo.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Estación de radio peruana que nos llega desde la capital del país con una propuesta musical que logra cautivar a un gran número de oyentes en todo el mundo.">
+  <title>Stereo Retro</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080808;--panel:#111;--red:#f20b20;--white:#f7f7f7;--muted:#aaa}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 25%,#251014 0,transparent 45%),var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column}
+    main{width:min(920px,100%);margin:auto;padding:32px 22px 54px;text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .live{display:inline-flex;align-items:center;gap:9px;border:1px solid #343434;border-radius:999px;padding:8px 13px;color:#eee;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 13px #f20b2077;animation:pulse 1.8s infinite}
+    img{display:block;width:min(390px,84vw);height:auto;margin:16px auto 8px;filter:drop-shadow(0 18px 35px #000)}
+    h1{font-size:clamp(1.65rem,5vw,2.7rem);line-height:1.08;margin:10px 0 12px;letter-spacing:-.04em} h1 span{color:var(--red)}
+    .intro{margin:0 auto 28px;max-width:470px;color:var(--muted);line-height:1.65}
+    .player{width:min(460px,100%);padding:22px;background:linear-gradient(145deg,#171717,#0e0e0e);border:1px solid #292929;border-radius:22px;box-shadow:0 18px 55px #0008}
+    .player-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;text-align:left}.station{font-weight:750;letter-spacing:.04em}.sub{font-size:.85rem;color:var(--muted);margin-top:4px}.live-small{font-size:.72rem;color:#ff5665;letter-spacing:.12em}
+    .controls{display:flex;align-items:center;gap:14px}.play{width:58px;height:58px;flex:none;border:0;border-radius:50%;background:var(--red);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 6px 22px #f20b2035;transition:transform .15s,background .15s}.play:hover{transform:scale(1.04);background:#ff2438}.play:focus-visible{outline:3px solid white;outline-offset:4px}
+    .status-wrap{flex:1;text-align:left;min-width:0}.status{font-weight:650}.hint{font-size:.82rem;color:var(--muted);margin-top:5px;line-height:1.4} .volume{width:100%;margin:18px 0 0;accent-color:var(--red);cursor:pointer}
+    footer{padding:20px;text-align:center;color:#777;font-size:.8rem;border-top:1px solid #1e1e1e}footer span{color:var(--red)}
+    @keyframes pulse{50%{opacity:.45;box-shadow:0 0 4px #f20b20}} @media(max-width:480px){main{padding-top:24px}.player{padding:18px}.play{width:52px;height:52px}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="live"><span class="dot"></span> Radio online</div>
+    <img src="https://stereoretroapp.pages.dev/img/logo.png" alt="Logo de Stereo Retro">
+    <h1>La Radio que te <span>Acompaña.</span></h1>
+    <p class="intro">Dale play y escucha Stereo Retro en vivo, Viajando en el Tiempo.</p>
+    <section class="player" aria-label="Reproductor de Stereo Retro">
+      <div class="player-top"><div><div class="station">Stereo Retro</div><div class="sub">Transmisión en directo</div></div><div class="live-small">● EN VIVO</div></div>
+      <div class="controls">
+        <button class="play" id="play" aria-label="Pausar" title="Reproducir">Ⅱ</button>
+        <div class="status-wrap"><div class="status" id="status">Estás escuchando Stereo Retro</div><div class="hint" id="hint">Transmisión en directo</div></div>
+      </div>
+      <label for="volume" class="hint" style="display:block;margin-top:18px">Volumen</label>
+      <input class="volume" id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
+      <audio id="audio" preload="none" src="https://stream-176.surfernetwork.com/gf2m0z9267zuv"></audio>
+    </section>
+  </main>
+  <footer>Hecho para <span>Stereo Retro</span> · Desde Lima Peru.</footer>
+<script>
+  // IMPORTANTE: reemplazá esta URL por la URL directa de tu streaming (MP3/AAC).
+  const STREAM_URL = "https://stream-176.surfernetwork.com/gf2m0z9267zuv";
+  const audio = document.getElementById('audio');
+  const play = document.getElementById('play');
+  const status = document.getElementById('status');
+  const hint = document.getElementById('hint');
+  const volume = document.getElementById('volume');
+  audio.volume = Number(volume.value);
+  volume.addEventListener('input', () => audio.volume = Number(volume.value));
+  play.addEventListener('click', async () => {
+    if (audio.paused) {
+      if (!STREAM_URL || STREAM_URL.includes('PEGAR_AQUI')) {
+        status.textContent = 'Falta configurar el streaming';
+        hint.textContent = 'Agregá la URL de audio en index.html';
+        return;
+      }
+      if (!audio.src) audio.src = STREAM_URL;
+      status.textContent = 'Conectando…'; hint.textContent = 'Esperando señal de la radio';
+      try { await audio.play(); play.textContent = 'Ⅱ'; play.setAttribute('aria-label','Pausar'); status.textContent = 'Estás escuchando 90.5 FM'; hint.textContent = 'Transmisión en directo'; }
+      catch(e) { status.textContent = 'No se pudo conectar'; hint.textContent = 'Verificá la URL del streaming e intentá otra vez'; }
+    } else { audio.pause(); play.textContent = '▶'; play.setAttribute('aria-label','Reproducir'); status.textContent = 'Reproducción pausada'; hint.textContent = 'Presioná reproducir para continuar'; }
+  });
+  audio.addEventListener('error', () => { status.textContent = 'Señal no disponible'; hint.textContent = 'Revisá la URL del streaming'; play.textContent = '▶'; });
+</script>
+
+
+</body></html>
