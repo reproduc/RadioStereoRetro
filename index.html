@@ -7,19 +7,22 @@
   <title>Stereo Retro</title>
   <style>
     :root{color-scheme:dark;--bg:#080808;--panel:#111;--red:#f20b20;--white:#f7f7f7;--muted:#aaa}
-    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 25%,#251014 0,transparent 45%),var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column}
-    main{width:min(920px,100%);margin:auto;padding:32px 22px 54px;text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    *{box-sizing:border-box} html{width:100%;min-height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%} body{margin:0;width:100%;min-width:0;min-height:100vh;min-height:100dvh;background:radial-gradient(ellipse at 50% 25%,#251014 0,transparent 45%),var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;flex-direction:column;overflow-x:hidden}
+    main{width:100%;max-width:964px;margin:0 auto;padding:clamp(12px,2.5vh,28px) clamp(14px,3vw,22px) clamp(14px,2.5vh,28px);text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}
     .live{display:inline-flex;align-items:center;gap:9px;border:1px solid #343434;border-radius:999px;padding:8px 13px;color:#eee;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
     .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 13px #f20b2077;animation:pulse 1.8s infinite}
-    img{display:block;width:min(390px,84vw);height:auto;margin:16px auto 8px;filter:drop-shadow(0 18px 35px #000)}
-    h1{font-size:clamp(1.65rem,5vw,2.7rem);line-height:1.08;margin:10px 0 12px;letter-spacing:-.04em} h1 span{color:var(--red)}
-    .intro{margin:0 auto 28px;max-width:470px;color:var(--muted);line-height:1.65}
-    .player{width:min(460px,100%);padding:22px;background:linear-gradient(145deg,#171717,#0e0e0e);border:1px solid #292929;border-radius:22px;box-shadow:0 18px 55px #0008}
-    .player-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;text-align:left}.station{font-weight:750;letter-spacing:.04em}.sub{font-size:.85rem;color:var(--muted);margin-top:4px}.live-small{font-size:.72rem;color:#ff5665;letter-spacing:.12em}
-    .controls{display:flex;align-items:center;gap:14px}.play{width:58px;height:58px;flex:none;border:0;border-radius:50%;background:var(--red);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 6px 22px #f20b2035;transition:transform .15s,background .15s}.play:hover{transform:scale(1.04);background:#ff2438}.play:focus-visible{outline:3px solid white;outline-offset:4px}
-    .status-wrap{flex:1;text-align:left;min-width:0}.status{font-weight:650}.hint{font-size:.82rem;color:var(--muted);margin-top:5px;line-height:1.4} .volume{width:100%;margin:18px 0 0;accent-color:var(--red);cursor:pointer}
-    footer{padding:20px;text-align:center;color:#777;font-size:.8rem;border-top:1px solid #1e1e1e}footer span{color:var(--red)}
-    @keyframes pulse{50%{opacity:.45;box-shadow:0 0 4px #f20b20}} @media(max-width:480px){main{padding-top:24px}.player{padding:18px}.play{width:52px;height:52px}}
+    img{display:block;width:min(340px, min(72vw, 34vh));max-width:100%;max-height:34vh;height:auto;object-fit:contain;margin:clamp(8px,1.5vh,16px) auto 6px;filter:drop-shadow(0 12px 25px #000)}
+    h1{font-size:clamp(1.45rem,5vw,2.5rem);line-height:1.08;margin:clamp(6px,1.3vh,10px) 0 8px;letter-spacing:-.04em} h1 span{color:var(--red)}
+    .intro{margin:0 auto clamp(10px,2vh,20px);max-width:470px;width:100%;color:var(--muted);line-height:1.45;font-size:clamp(.88rem,2.5vw,1rem);text-wrap:pretty}
+    .player{width:min(460px,100%);min-width:0;padding:clamp(13px,2.5vh,20px);background:linear-gradient(145deg,#171717,#0e0e0e);border:1px solid #292929;border-radius:clamp(16px,4vw,22px);box-shadow:0 18px 55px #0008}
+    .player-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;margin-bottom:18px;text-align:left}.station{font-weight:750;letter-spacing:.04em}.sub{font-size:.85rem;color:var(--muted);margin-top:4px}.live-small{font-size:clamp(.62rem,2vw,.72rem);color:#ff5665;letter-spacing:.1em;white-space:nowrap}
+    .controls{display:flex;align-items:center;gap:clamp(10px,3vw,14px);min-width:0}.play{width:clamp(46px,12vw,58px);height:clamp(46px,12vw,58px);flex:none;border:0;border-radius:50%;background:var(--red);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 6px 22px #f20b2035;transition:transform .15s,background .15s}.play:hover{transform:scale(1.04);background:#ff2438}.play:focus-visible{outline:3px solid white;outline-offset:4px}
+    .status-wrap{flex:1;text-align:left;min-width:0;overflow-wrap:anywhere}.status{font-weight:650;line-height:1.35}.hint{font-size:.82rem;color:var(--muted);margin-top:5px;line-height:1.4} .volume{display:block;width:100%;max-width:100%;margin:18px 0 0;accent-color:var(--red);cursor:pointer;touch-action:pan-y}
+    footer{width:100%;padding:clamp(8px,1.5vh,14px) 12px;text-align:center;color:#777;font-size:clamp(.72rem,2.5vw,.8rem);line-height:1.5;border-top:1px solid #1e1e1e}footer span{color:var(--red)}
+    @keyframes pulse{50%{opacity:.45;box-shadow:0 0 4px #f20b20}}\n    @media(max-width:360px){.live{font-size:.66rem;padding:6px 9px;letter-spacing:.08em}h1{font-size:clamp(1.35rem,7.5vw,1.7rem)}.player-top{gap:6px}.sub{font-size:.76rem}.status{font-size:.9rem}.hint{font-size:.76rem}}
+    @media(max-height:700px){main{padding-top:8px;padding-bottom:8px}img{width:min(260px, min(58vw, 27vh));max-height:27vh;margin-top:6px;margin-bottom:4px}h1{margin-top:5px;margin-bottom:6px}.intro{margin-bottom:8px;line-height:1.35}.player{padding:12px}.player-top{margin-bottom:10px}.volume{margin-top:10px}footer{padding:7px 10px}}
+    @media(max-height:560px){.live{padding:5px 9px;font-size:.65rem}img{width:min(190px, min(42vw, 22vh));max-height:22vh}h1{font-size:clamp(1.2rem,4vw,1.8rem)}.intro{font-size:.82rem}.player{padding:9px}.play{width:42px;height:42px}.player-top{margin-bottom:7px}.volume{margin-top:7px}footer{font-size:.68rem}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}}
   </style>
 </head>
 <body>
